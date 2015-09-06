@@ -24,8 +24,8 @@ public enum HealingTypes
 
 public enum HealingPickups
 {
-    CONTACT,
-    INTERACTION
+    COLLIDED,
+    INTERACTED
 }
 
 [System.Serializable]
@@ -44,6 +44,5 @@ public class ObjectTypes{
 
     public HealingTypes healingType;
     public HealingPickups healingPickupType;
-
     public float healingAmount;
 }

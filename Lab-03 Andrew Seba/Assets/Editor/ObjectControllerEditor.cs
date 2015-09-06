@@ -19,7 +19,9 @@ public class ObjectControllerEditor : Editor {
 
         SerializedProperty controller = serializedObject.FindProperty("controllerObjects");
 
+        //Display the foldout
         EditorGUILayout.PropertyField(controller);
+
         if (controller.isExpanded)
         {
             EditorGUILayout.PropertyField(controller.FindPropertyRelative("Array.size"));
