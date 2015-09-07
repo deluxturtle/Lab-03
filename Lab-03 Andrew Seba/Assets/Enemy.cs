@@ -8,44 +8,24 @@ public enum FactionType
     PASSIVE
 }
 
-public enum AttackType
-{
-    MELEE,
-    RANGED
-}
+public class Enemy : MonoBehaviour {
 
-public enum AttackDamage
-{
-    PHYSICAL,
-    SPELL
-}
+    public FactionType factionTypes;
+    public float health;
+    public float mana;
 
-public enum SpellTypes
-{
-    FIRE,
-    FROST,
-    ARCANE
-}
+    public bool armourCloth;
+    public bool armourLeather;
+    public bool armourMail;
+    public bool armourPlate;
+	
 
-public enum WeaponType
-{
-    TWO_HANDED,
-    DUAL_WEILD
-}
-
-
-public class Enemy: MonoBehaviour{
-    public FactionType factionType;
-
-
-    public float Health;
-    public float Mana;
-
-    public AttackType attackType;
-    public AttackDamage attackDamage;
-    public SpellTypes spellTypes;
-    public WeaponType weaponType;
-
-    
-    
+    void Update()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            Debug.Log(string.Format("Cloth<{0}>, Leather<{1}>, Mail<{2}>, Plate<{3}>", armourCloth, armourLeather, armourMail, armourPlate));
+            Debug.Log(string.Format("Health<{0}>, Mana<{1}>", health, mana));
+        }
+    }
 }

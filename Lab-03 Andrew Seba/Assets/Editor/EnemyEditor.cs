@@ -6,10 +6,9 @@ using UnityEditor;
 public class EnemyEditor : Editor {
 
     Enemy enemyScript;
-    bool factionSettings = false;
+    bool healthSettings = false;
     bool armourSettings = false;
 
-    bool armourTypes = false;
 
     void Awake()
     {
@@ -18,23 +17,26 @@ public class EnemyEditor : Editor {
 
     public override void OnInspectorGUI()
     {
-        factionSettings = EditorGUILayout.Foldout(factionSettings, "Faction Settings");
-        if (factionSettings)
-        {
-            EditorGUI.indentLevel++;
-            serializedObject.Update();
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("factionType"), true);
-            EditorGUI.indentLevel--;
-        }
-        serializedObject.ApplyModifiedProperties();
+        //armourType = serializedObject.FindProperty("armour");
+        //clothArmour = serializedObject.FindProperty("armourCloth");
         armourSettings = EditorGUILayout.Foldout(armourSettings, "Armour Settings");
         if (armourSettings)
         {
             EditorGUI.indentLevel++;
-            serializedObject.Update();
-            EditorGUILayout.Toggle();
+            enemyScript.armourCloth = EditorGUILayout.Toggle("Cloth", enemyScript.armourCloth);
+            enemyScript.armourLeather = EditorGUILayout.Toggle("Leather", enemyScript.armourLeather);
+            enemyScript.armourMail = EditorGUILayout.Toggle("Mail", enemyScript.armourMail);
+            enemyScript.armourPlate = EditorGUILayout.Toggle("Plate", enemyScript.armourPlate);
             EditorGUI.indentLevel--;
+
         }
+
+        enemyScript.health = EditorGUILayout.FloatField("Health:", enemyScript.health);
+        enemyScript.mana = EditorGUILayout.FloatField("Mana: ", enemyScript.mana);
+
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("factionTypes"));
+        serializedObject.ApplyModifiedProperties();
 
     }
 
