@@ -8,19 +8,15 @@ public enum Classification
     OFFHAND
 }
 
-public enum WeaponType
-{
-    SWORD,
-    SHIELD,
-    RELIC,
-    HAMMER,
-    SYCTH
-}
-
 public class Weapon : MonoBehaviour {
 
     public Classification weaponClass;
-    public WeaponType weaponType;
     public float damage;
     public bool upgradable;
+
+    public bool swordType;
+    public bool shieldType;
+    public bool relicType;
+    public bool hammerType;
+    public bool scythType;
 }
