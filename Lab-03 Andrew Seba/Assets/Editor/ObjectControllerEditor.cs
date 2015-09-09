@@ -5,12 +5,12 @@ using UnityEditor;
 [CustomEditor(typeof(ObjectController))]
 public class ObjectControllerEditor : Editor {
 
-    ObjectController controllerScript;
+    //ObjectController controllerScript;
 
-    void Awake()
-    {
-        controllerScript = (ObjectController)target;
-    }
+    //void Awake()
+    //{
+    //    controllerScript = (ObjectController)target;
+    //}
 
     public override void OnInspectorGUI()
     {

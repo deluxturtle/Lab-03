@@ -7,7 +7,11 @@ public class EnemyEditor : Editor {
 
     Enemy enemyScript;
     bool healthSettings = false;
+    bool manaOption = false;
     bool armourSettings = false;
+    bool mailOption = true;
+    bool attackDamageSettings = false;
+    bool weaponType = false;
 
 
     void Awake()
@@ -17,25 +21,107 @@ public class EnemyEditor : Editor {
 
     public override void OnInspectorGUI()
     {
-        //armourType = serializedObject.FindProperty("armour");
-        //clothArmour = serializedObject.FindProperty("armourCloth");
+        serializedObject.Update();
+
+        enemyScript.enemyName = EditorGUILayout.TextField("Name: ", enemyScript.enemyName);
+
+        healthSettings = EditorGUILayout.Foldout(healthSettings, "Health");
+        if (healthSettings)
+        {
+            EditorGUI.indentLevel++;
+            enemyScript.health = EditorGUILayout.Slider("Health:", enemyScript.health, 0f, 100f);
+            EditorGUI.indentLevel--;
+        }
+
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("factionTypes"));
+
+
         armourSettings = EditorGUILayout.Foldout(armourSettings, "Armour Settings");
         if (armourSettings)
         {
             EditorGUI.indentLevel++;
-            enemyScript.armourCloth = EditorGUILayout.Toggle("Cloth", enemyScript.armourCloth);
+
             enemyScript.armourLeather = EditorGUILayout.Toggle("Leather", enemyScript.armourLeather);
-            enemyScript.armourMail = EditorGUILayout.Toggle("Mail", enemyScript.armourMail);
+            if(mailOption == false)
+            {
+                EditorGUILayout.LabelField("Mail");
+            }
+            else
+            {
+                enemyScript.armourMail = EditorGUILayout.Toggle("Mail", enemyScript.armourMail);
+            }
             enemyScript.armourPlate = EditorGUILayout.Toggle("Plate", enemyScript.armourPlate);
             EditorGUI.indentLevel--;
 
         }
 
-        enemyScript.health = EditorGUILayout.FloatField("Health:", enemyScript.health);
-        enemyScript.mana = EditorGUILayout.FloatField("Mana: ", enemyScript.mana);
+        
 
-        serializedObject.Update();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("factionTypes"));
+        attackDamageSettings = EditorGUILayout.Foldout(attackDamageSettings, "Attack Damage Settings");
+        if(attackDamageSettings)
+        {
+            EditorGUI.indentLevel++;
+            SerializedProperty attackDamage = serializedObject.FindProperty("attackDamage");
+            EditorGUILayout.PropertyField(attackDamage);
+            if(enemyScript.attackDamage == AttackDamage.PHYSICAL)
+            {
+                manaOption = false;
+                enemyScript.armourCloth = false;
+            }
+            else
+            {
+                manaOption = true;
+                
+            }
+
+            EditorGUI.indentLevel++;
+            if (manaOption)
+            {
+                enemyScript.mana = EditorGUILayout.FloatField("Mana: ", enemyScript.mana);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("spellType"));
+                EditorGUILayout.LabelField("Special Armour");
+                EditorGUI.indentLevel++;
+                enemyScript.armourCloth = EditorGUILayout.Toggle("Cloth", enemyScript.armourCloth);
+                EditorGUI.indentLevel--;
+
+            }
+            else
+            {
+                enemyScript.mana = 0;
+            }
+            EditorGUI.indentLevel--;
+
+            EditorGUI.indentLevel--;
+        }
+
+        EditorGUILayout.Space();
+        weaponType = EditorGUILayout.Foldout(weaponType, "Weapon Type");
+        if (weaponType)
+        {
+            //EditorGUILayout.LabelField("Weapon Type");
+            EditorGUILayout.BeginHorizontal();
+            enemyScript.twoHanded = EditorGUILayout.Toggle("Two Handed", enemyScript.twoHanded);
+            if(enemyScript.twoHanded == true)
+            {
+                EditorGUILayout.LabelField("Mail Armour Disabled.");
+                enemyScript.armourMail = false;
+                mailOption = false;
+
+            }
+            else
+            {
+                mailOption = true;
+            }
+            EditorGUILayout.EndHorizontal();
+            enemyScript.duelWeild = EditorGUILayout.Toggle("Duel Weild", enemyScript.duelWeild);
+
+        }
+        
+        //EditorGUILayout.PropertyField(serializedObject.FindProperty("attackDamage"));
+
+
+
+
         serializedObject.ApplyModifiedProperties();
 
     }
