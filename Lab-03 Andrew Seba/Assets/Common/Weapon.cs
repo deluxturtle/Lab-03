@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Author: Andrew Seba
+/// Description: Generic Weapon Class that holds its values.
+/// </summary>
+
 public enum Classification
 {
     TWOHANDED,
@@ -24,8 +29,5 @@ public class Weapon{
     public WeaponType weaponType;
     public float damage;
     public bool upgradable;
-
-    
-    
 
 }

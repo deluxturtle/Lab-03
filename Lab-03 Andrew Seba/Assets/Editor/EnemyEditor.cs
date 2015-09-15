@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEditor;
 
+/// <summary>
+/// Author: Andrew Seba
+/// Description: Custom editor for enemy.
+/// </summary>
 [CustomEditor(typeof(Enemy))]
 public class EnemyEditor : Editor {
 
@@ -77,7 +81,7 @@ public class EnemyEditor : Editor {
             EditorGUI.indentLevel++;
             if (manaOption)
             {
-                enemyScript.mana = EditorGUILayout.FloatField("Mana: ", enemyScript.mana);
+                enemyScript.mana = EditorGUILayout.Slider("Mana: ", enemyScript.mana, 0,100);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("spellType"));
                 EditorGUILayout.LabelField("Special Armour");
                 EditorGUI.indentLevel++;
@@ -98,23 +102,35 @@ public class EnemyEditor : Editor {
         weaponType = EditorGUILayout.Foldout(weaponType, "Weapon Type");
         if (weaponType)
         {
-            //EditorGUILayout.LabelField("Weapon Type");
-            EditorGUILayout.BeginHorizontal();
-            enemyScript.twoHanded = EditorGUILayout.Toggle("Two Handed", enemyScript.twoHanded);
-            if(enemyScript.twoHanded == true)
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("attackTypes"));
+
+            if(enemyScript.attackTypes == AttackType.MELEE)
             {
-                EditorGUILayout.LabelField("Mail Armour Disabled.");
-                enemyScript.armourMail = false;
-                mailOption = false;
+                EditorGUILayout.BeginHorizontal();
+                enemyScript.twoHanded = EditorGUILayout.Toggle("Two Handed", enemyScript.twoHanded);
+                if(enemyScript.twoHanded == true)
+                {
+                    EditorGUILayout.LabelField("Mail Armour Disabled.");
+                    enemyScript.armourMail = false;
+                    mailOption = false;
+
+                }
+                else
+                {
+                    mailOption = true;
+                }
+                EditorGUILayout.EndHorizontal();
+                enemyScript.duelWeild = EditorGUILayout.Toggle("Duel Weild", enemyScript.duelWeild);
 
             }
             else
             {
-                mailOption = true;
+                enemyScript.twoHanded = false;
+                enemyScript.duelWeild = false;
             }
-            EditorGUILayout.EndHorizontal();
-            enemyScript.duelWeild = EditorGUILayout.Toggle("Duel Weild", enemyScript.duelWeild);
 
+            EditorGUI.indentLevel--;
         }
         
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("attackDamage"));
