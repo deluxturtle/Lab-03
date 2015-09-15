@@ -2,15 +2,15 @@
 using System.Collections;
 using UnityEditor;
 
-[CustomEditor(typeof(Weapon))]
+[CustomEditor(typeof(WeaponController))]
 public class WeaponEditor : Editor {
 
-    Weapon weaponScript;
+    //Weapon weaponScript;
     
-    void Awake()
-    {
-        weaponScript = (Weapon)target;
-    }
+    //void Awake()
+    //{
+    //    weaponScript = (Weapon)target;
+    //}
 
     public override void OnInspectorGUI()
     {
@@ -18,49 +18,15 @@ public class WeaponEditor : Editor {
 
 
         //Toggle off shield and relic if 2 handed
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("weaponClass"));
 
-        SerializedProperty controller = serializedObject.FindProperty("weaponType");
+        SerializedProperty controller = serializedObject.FindProperty("controllerWeapon");
+
         EditorGUILayout.PropertyField(controller);
+        
 
+        //weaponScript.damage = EditorGUILayout.Slider("Damage", weaponScript.damage, 0, 100);
 
-        //EditorGUI.indentLevel++;
-        //switch (weaponScript.weaponClass)
-        //{
-        //    case Classification.TWOHANDED:
-        //        weaponScript.swordType = EditorGUILayout.Toggle("Sword", weaponScript.swordType);
-        //        weaponScript.hammerType = EditorGUILayout.Toggle("Hammer", weaponScript.hammerType);
-        //        weaponScript.scythType = EditorGUILayout.Toggle("Scyth", weaponScript.scythType);
-        //        EditorGUILayout.LabelField("Shield [Off Hand Weapon Only]");
-
-        //        weaponScript.shieldType = false;
-        //        EditorGUILayout.LabelField("Relic [Off Hand Weapon Only");
-        //        weaponScript.relicType = false;
-        //        break;
-        //    case Classification.ONEHANDED:
-        //        weaponScript.swordType = EditorGUILayout.Toggle("Sword", weaponScript.swordType);
-        //        weaponScript.hammerType = EditorGUILayout.Toggle("Hammer", weaponScript.hammerType);
-        //        EditorGUILayout.LabelField("Scyth [Two Handed Only]");
-        //        weaponScript.scythType = false;
-        //        EditorGUILayout.LabelField("Shield [Off Hand Weapon Only]");
-        //        weaponScript.shieldType = false;
-        //        EditorGUILayout.LabelField("Relic [Off Hand Weapon Only");
-        //        weaponScript.relicType = false;
-        //        break;
-        //    case Classification.OFFHAND:
-        //        weaponScript.swordType = false;
-        //        EditorGUILayout.LabelField("Hammer [One or Two Handed Only");
-        //        weaponScript.hammerType = false;
-        //        EditorGUILayout.LabelField("Scyth [Two Handed Only]");
-        //        weaponScript.scythType = false;
-
-        //        break;
-        //}
-        //EditorGUI.indentLevel--;
-
-        weaponScript.damage = EditorGUILayout.Slider("Damage", weaponScript.damage, 0, 100);
-
-        weaponScript.upgradable = EditorGUILayout.Toggle("Upgradable", weaponScript.upgradable);
+        //weaponScript.upgradable = EditorGUILayout.Toggle("Upgradable", weaponScript.upgradable);
 
         serializedObject.ApplyModifiedProperties();
     }
